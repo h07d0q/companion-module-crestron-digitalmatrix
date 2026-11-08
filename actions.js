@@ -37,7 +37,7 @@ export function getActionDefinitions(self) {
 					width: 2,
 					choices: self.destinations,
 					isVisible: (options) => !options.id_dst_var_cbx,
-					default: self.destinations[0].id, // Default to the first destination
+					default: self.destinations[0]?.id ?? 0, // Default to the first destination
 				},
 				{
 					type: 'checkbox',
@@ -61,7 +61,7 @@ export function getActionDefinitions(self) {
 					choices: self.sources,
 					useVariables: true,
 					isVisible: (options) => !options.id_src_var_cbx,
-					default: self.sources[0].id, // Default to the first source
+					default: self.sources[0]?.id ?? 0, // Default to the first source
 				},
 			],
 			callback: async (action) => {

@@ -25,7 +25,7 @@ export function initPresets(instance) {
 						actionId: 'route',
 						delay: 0,
 						options: {
-							id_dst: self.destinations?.[0].id,
+							id_dst: self.destinations?.[0]?.id ?? 0,
 							id_dst_var_cbx: false,
 							id_dst_var: '',
 							id_src: 1,
@@ -44,7 +44,7 @@ export function initPresets(instance) {
 					input: 1,
 					input_var_cbx: false,
 					input_var: '',
-					output: self.destinations?.[0].id,
+					output: self.destinations?.[0]?.id ?? 0,
 					output_var_cbx: false,
 					output_var: '',
 					id_type: 'Video',

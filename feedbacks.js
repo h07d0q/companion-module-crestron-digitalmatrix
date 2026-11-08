@@ -44,7 +44,7 @@ export function initFeedbacks(instance) {
 					width: 2,
 					choices: self.destinations,
 					isVisible: (options) => !options.output_var_cbx,
-					default: self.destinations[0].id, // Default to the first destination
+					default: self.destinations[0]?.id ?? 0, // Default to the first destination
 				},
 				{
 					type: 'checkbox',
@@ -67,7 +67,7 @@ export function initFeedbacks(instance) {
 					width: 2,
 					choices: self.sources,
 					isVisible: (options) => !options.input_var_cbx,
-					default: self.sources[0].id, // Default to the first source
+					default: self.sources[0]?.id ?? 0, // Default to the first source
 				},
 			],
 			callback: async (feedback, context) => {

@@ -6,6 +6,7 @@ import { initPresets } from './presets.js'
 import { upgradeScripts } from './upgrade.js'
 
 class CrestronInstance extends InstanceBase {
+	firstRun = true
 	// Heartbeat properties
 	heartbeatTimer = null
 	heartbeatTimeoutTimer = null
@@ -18,11 +19,6 @@ class CrestronInstance extends InstanceBase {
 		//this.setActionDefinitions(getActionDefinitions(this))
 
 		await this.configUpdated(config)
-
-		this.sources = []
-		this.sources.push({ id: 0, label: 'Off' })
-		this.destinations = []
-		this.routingMatrix = {}
 	}
 
 	async configUpdated(config) {
@@ -33,6 +29,7 @@ class CrestronInstance extends InstanceBase {
 
 		this.config = config
 
+		this.firstRun = true
 		this.sources = [] // Reset sources
 		this.sources.push({ id: 0, label: 'Off' })
 		this.destinations = [] // Reset destinations
@@ -215,6 +212,7 @@ class CrestronInstance extends InstanceBase {
 	onConnected(deviceModel) {
 		this.updateStatus(InstanceStatus.Ok)
 		this.log('info', 'Connected to: ' + deviceModel[0])
+		this.firstRun = true
 		this.sendToCrestron('timedate ' + this.getFormattedDateTime()) // optional. send current Date and Time
 		this.sendToCrestron('dumpdmstreaminfo') // optional. get Matrix model and stream info
 		this.getRouting() // get routes and update feedbacks
@@ -353,12 +351,13 @@ class CrestronInstance extends InstanceBase {
 		let i = 1
 
 		if (routesMatches && routesMatches.length > 0) {
-			if (!this.variableDefinitions || Object.keys(this.variableDefinitions).length === 0) {
+			if (this.firstRun || !this.variableDefinitions || this.variableDefinitions.length === 0) {
 				this.log('debug', 'First run! In-/Outputs and variables have to be defined.')
 				this.firstRun = true
-				this.variableDefinitions.push({ name: 'Last TCP Response', variableId: 'tcp_response' })
+				this.variableDefinitions = [{ name: 'Last TCP Response', variableId: 'tcp_response' }]
 				this.variableValues['tcp_response'] = ''
 			}
+			this.destinations = []
 			// parsing the output routes
 			routesMatches.forEach((match) => {
 				const slot = parseInt(match[1], 10)
@@ -394,6 +393,7 @@ class CrestronInstance extends InstanceBase {
 				let InputRegex = /Routing Information for Input Card at Slot (\d{1,2}).*\r\n/g
 				const inputMatches = [...response.matchAll(InputRegex)] // Convert to array for easier handling
 				if (inputMatches && inputMatches.length > 0) {
+					this.sources = [{ id: 0, label: 'Off' }]
 					inputMatches.forEach((inputMatch) => {
 						const inputSlot = parseInt(inputMatch[1], 10)
 						this.sources.push({ id: inputSlot, label: inputSlot })
