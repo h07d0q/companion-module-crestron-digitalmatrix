@@ -1,8 +1,9 @@
 {
+	"type": "connection",
 	"id": "crestron-digitalmatrix",
 	"name": "crestron-digitalmatrix",
 	"shortname": "dm",
-	"description": "",
+	"description": "Control Crestron DigitalMedia Matrix switchers",
 	"version": "0.0.0",
 	"license": "MIT",
 	"repository": "git+https://github.com/bitfocus/companion-module-crestron-digitalmatrix.git",
@@ -13,8 +14,7 @@
 			"email": "ebalsley@netflix.com"
 		},
 		{
-			"name": "Eugen Hottmann",
-			"email": ""
+			"name": "Eugen Hottmann"
 		}
 	],
 	"legacyIds": [],
@@ -22,7 +22,7 @@
 		"type": "node22",
 		"api": "nodejs-ipc",
 		"apiVersion": "0.0.0",
-		"entrypoint": "../index.js"
+		"entrypoint": "../dist/main.js"
 	},
 	"manufacturer": "Crestron",
 	"products": ["DigitalMedia Switcher"],

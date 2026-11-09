@@ -1,12 +1,14 @@
 {
 	"name": "crestron-digitalmatrix",
-	"version": "2.1.6",
-	"main": "index.js",
+	"version": "3.0.0",
+	"main": "dist/main.js",
 	"type": "module",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
 		"format": "prettier -w .",
-		"package": "companion-module-build"
+		"package": "rimraf dist && tsc -p tsconfig.build.json && companion-module-build",
+		"build": "rimraf dist && tsc -p tsconfig.build.json",
+		"build:main": "tsc -p tsconfig.build.json",
+		"dev": "tsc -p tsconfig.build.json --watch"
 	},
 	"repository": {
 		"type": "git",
@@ -14,12 +16,15 @@
 	},
 	"license": "MIT",
 	"dependencies": {
-		"@companion-module/base": "~1.11.2"
+		"@companion-module/base": "~2.2.2"
 	},
 	"devDependencies": {
-		"@companion-module/tools": "^2.8.0",
+		"@companion-module/tools": "^3.2.0",
+		"@types/node": "^22.20.5",
 		"eslint": "^9.29.0",
-		"prettier": "^3.4.2"
+		"prettier": "^3.5.3",
+		"rimraf": "^6.1.4",
+		"typescript": "^5.7.0"
 	},
 	"prettier": "@companion-module/tools/.prettierrc.json",
 	"packageManager": "yarn@4.18.1"
