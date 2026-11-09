@@ -30,8 +30,7 @@ class CrestronInstance extends InstanceBase {
 		this.config = config
 
 		this.firstRun = true
-		this.sources = [] // Reset sources
-		this.sources.push({ id: 0, label: 'Off' })
+		this.sources = [{ id: 0, label: 'Off' }] // Reset sources
 		this.destinations = [] // Reset destinations
 		this.routingMatrix = {} // Reset routes object
 		this.variableValues = {}
