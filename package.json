@@ -5,8 +5,8 @@
 	"type": "module",
 	"scripts": {
 		"format": "prettier -w .",
-		"package": "rimraf dist && tsc -p tsconfig.build.json && companion-module-build",
-		"build": "rimraf dist && tsc -p tsconfig.build.json",
+		"package": "yarn build && companion-module-build",
+		"build": "rimraf dist && yarn build:main",
 		"build:main": "tsc -p tsconfig.build.json",
 		"dev": "tsc -p tsconfig.build.json --watch"
 	},
