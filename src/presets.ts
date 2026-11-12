@@ -245,10 +245,15 @@ export function updatePresets(self: CrestronInstance): void {
 				{
 					down: [
 						{
-							actionId: ActionId.Disconnect,
+							actionId: ActionId.Route,
 							options: {
 								id_type: 'SETAVROUTE',
 								id_dst: outSlot,
+								id_dst_var_cbx: false,
+								id_dst_var: '',
+								id_src: 0,
+								id_src_var_cbx: false,
+								id_src_var: '',
 							},
 						},
 					],

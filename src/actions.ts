@@ -3,7 +3,6 @@ import type CrestronInstance from './main.js'
 
 export enum ActionId {
 	Route = 'route',
-	Disconnect = 'disconnect',
 	PollRoutes = 'poll_routes',
 	FpLockout = 'fplockout',
 	DisplayMessage = 'display_message',
@@ -87,41 +86,6 @@ export function updateActions(self: CrestronInstance): void {
 				self.updateLocalRoute(idDst, idSrc, idType)
 
 				// Request updated routing table from device asynchronously
-				self.requestRoutingUpdate()
-			},
-		},
-
-		[ActionId.Disconnect]: {
-			name: 'Disconnect / Mute output',
-			hasResult: false,
-			options: [
-				{
-					type: 'dropdown',
-					id: 'id_type',
-					label: 'Disconnect type',
-					choices: [
-						{ id: 'SETAVROUTE', label: 'Audio & Video' },
-						{ id: 'SETAVUROUTE', label: 'Audio, Video & USB' },
-						{ id: 'SETVIDEOROUTE', label: 'Video' },
-						{ id: 'SETAUDIOROUTE', label: 'Audio' },
-						{ id: 'SETUSBROUTE', label: 'USB' },
-					],
-					default: 'SETAVROUTE',
-				},
-				{
-					type: 'dropdown',
-					id: 'id_dst',
-					label: 'Output',
-					choices: self.destinations.map((d) => ({ id: d.id, label: `Output ${d.label} (Slot ${d.id})` })),
-					default: self.destinations[0]?.id ?? 0,
-				},
-			],
-			callback: async (action) => {
-				const idDst = Number(action.options.id_dst ?? 0)
-				const idType = String(action.options.id_type || 'SETAVROUTE')
-				const cmd = `${idType} 0 ${idDst}`
-				self.sendToCrestron(cmd)
-				self.updateLocalRoute(idDst, 0, idType)
 				self.requestRoutingUpdate()
 			},
 		},
