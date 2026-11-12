@@ -71,7 +71,7 @@ export function updateActions(self: CrestronInstance): void {
 				},
 			],
 			callback: async (action) => {
-				const idType = String(action.options.id_type || 'SETAVROUTE')
+				const idType = (action.options.id_type as string) || 'SETAVROUTE'
 
 				const rawDst = action.options.id_dst_var_cbx ? action.options.id_dst_var : action.options.id_dst
 				const idDst = await self.getSlotOrOff(rawDst as string | number, self.destinations, 'Destination')
@@ -138,7 +138,7 @@ export function updateActions(self: CrestronInstance): void {
 				},
 			],
 			callback: async (action) => {
-				const msg = String(action.options.message ?? '')
+				const msg = (action.options.message as string) ?? ''
 				const cmd = action.options.shortMessage ? `shortmessage ${msg}` : `message ${msg}`
 				self.sendToCrestron(cmd)
 			},

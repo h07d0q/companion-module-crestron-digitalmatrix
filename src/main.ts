@@ -1,4 +1,10 @@
-import { InstanceBase, InstanceStatus, TCPHelper, type JsonObject } from '@companion-module/base'
+import {
+	InstanceBase,
+	InstanceStatus,
+	TCPHelper,
+	type JsonObject,
+	type SomeCompanionConfigField,
+} from '@companion-module/base'
 import { getConfigFields, type ModuleConfig, type ModuleSecrets } from './config.js'
 import { updateActions } from './actions.js'
 import { updateFeedbacks, FeedbackId } from './feedbacks.js'
@@ -25,20 +31,20 @@ export default class CrestronInstance extends InstanceBase {
 	private routingDebounceTimer: NodeJS.Timeout | null = null
 	private readonly HEARTBEAT_TIMEOUT = 10000
 
-	async init(config: JsonObject, _isFirstInit: boolean, secrets?: JsonObject | undefined): Promise<void> {
+	async init(config: JsonObject, _isFirstInit: boolean, secrets?: JsonObject): Promise<void> {
 		this.config = config as unknown as ModuleConfig
-		this.secrets = (secrets ?? {}) as unknown as ModuleSecrets
+		this.secrets = secrets ?? {}
 
 		this.updateAllDefinitions()
 
 		await this.configUpdated(config, secrets)
 	}
 
-	async configUpdated(config: JsonObject, secrets?: JsonObject | undefined): Promise<void> {
+	async configUpdated(config: JsonObject, secrets?: JsonObject): Promise<void> {
 		this.cleanupSocket()
 
 		this.config = config as unknown as ModuleConfig
-		this.secrets = (secrets ?? {}) as unknown as ModuleSecrets
+		this.secrets = secrets ?? {}
 
 		this.firstRun = true
 		this.sources = [{ id: 0, label: 'Off' }]
@@ -61,7 +67,7 @@ export default class CrestronInstance extends InstanceBase {
 		this.updateStatus(InstanceStatus.Disconnected)
 	}
 
-	getConfigFields() {
+	getConfigFields(): SomeCompanionConfigField[] {
 		return getConfigFields()
 	}
 

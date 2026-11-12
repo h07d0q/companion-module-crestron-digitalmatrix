@@ -1,7 +1,16 @@
-import type { CompanionStaticUpgradeScript, CompanionStaticUpgradeResult, JsonObject } from '@companion-module/base'
+import type {
+	CompanionStaticUpgradeScript,
+	CompanionStaticUpgradeResult,
+	CompanionUpgradeContext,
+	CompanionStaticUpgradeProps,
+	JsonObject,
+} from '@companion-module/base'
 
 export const upgradeScripts: CompanionStaticUpgradeScript<JsonObject, JsonObject>[] = [
-	function v2_0_0(_context, props): CompanionStaticUpgradeResult<JsonObject, JsonObject> {
+	function v2_0_0(
+		_context: CompanionUpgradeContext<JsonObject>,
+		props: CompanionStaticUpgradeProps<JsonObject, JsonObject>,
+	): CompanionStaticUpgradeResult<JsonObject, JsonObject> {
 		const result: CompanionStaticUpgradeResult<JsonObject, JsonObject> = {
 			updatedConfig: null,
 			updatedActions: [],
@@ -27,7 +36,10 @@ export const upgradeScripts: CompanionStaticUpgradeScript<JsonObject, JsonObject
 		return result
 	},
 
-	function v2_1_0(_context, props): CompanionStaticUpgradeResult<JsonObject, JsonObject> {
+	function v2_1_0(
+		_context: CompanionUpgradeContext<JsonObject>,
+		props: CompanionStaticUpgradeProps<JsonObject, JsonObject>,
+	): CompanionStaticUpgradeResult<JsonObject, JsonObject> {
 		const result: CompanionStaticUpgradeResult<JsonObject, JsonObject> = {
 			updatedConfig: null,
 			updatedActions: [],
@@ -102,7 +114,10 @@ export const upgradeScripts: CompanionStaticUpgradeScript<JsonObject, JsonObject
 		return result
 	},
 
-	function v3_0_0(_context, props): CompanionStaticUpgradeResult<JsonObject, JsonObject> {
+	function v3_0_0(
+		_context: CompanionUpgradeContext<JsonObject>,
+		props: CompanionStaticUpgradeProps<JsonObject, JsonObject>,
+	): CompanionStaticUpgradeResult<JsonObject, JsonObject> {
 		const result: CompanionStaticUpgradeResult<JsonObject, JsonObject> = {
 			updatedConfig: null,
 			updatedSecrets: null,

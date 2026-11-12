@@ -5,6 +5,8 @@
 	"type": "module",
 	"scripts": {
 		"format": "prettier -w .",
+		"lint:raw": "eslint",
+		"lint": "yarn lint:raw .",
 		"package": "yarn build && companion-module-build",
 		"build": "rimraf dist && yarn build:main",
 		"build:main": "tsc -p tsconfig.build.json",
@@ -21,10 +23,11 @@
 	"devDependencies": {
 		"@companion-module/tools": "^3.2.0",
 		"@types/node": "^22.20.5",
-		"eslint": "^9.29.0",
+		"eslint": "^9.39.3",
 		"prettier": "^3.5.3",
 		"rimraf": "^6.1.4",
-		"typescript": "^5.7.0"
+		"typescript": "^5.7.0",
+		"typescript-eslint": "^8.26.0"
 	},
 	"prettier": "@companion-module/tools/.prettierrc.json",
 	"packageManager": "yarn@4.18.1"
