@@ -108,7 +108,7 @@ export function updatePresets(self: CrestronInstance): void {
 					halign: 'center',
 					valign: 'center',
 				},
-				// Center routed source number
+				// Center routed source number (auto-detects matched AV vs. split Video/Audio)
 				{
 					id: 'source_text',
 					type: 'text',
@@ -116,8 +116,11 @@ export function updatePresets(self: CrestronInstance): void {
 					y: 30,
 					width: 90,
 					height: 42,
-					text: `$(dm:RouteOut${outSlot}Video)`,
-					fontsize: 20,
+					text: {
+						isExpression: true,
+						value: `$(dm:RouteOut${outSlot}Video) == $(dm:RouteOut${outSlot}Audio) ? 'AV: IN ' + $(dm:RouteOut${outSlot}Video) : 'V: ' + $(dm:RouteOut${outSlot}Video) + ' | A: ' + $(dm:RouteOut${outSlot}Audio)`,
+					},
+					fontsize: 16,
 					color: '#ffffff',
 					halign: 'center',
 					valign: 'center',
@@ -193,7 +196,8 @@ export function updatePresets(self: CrestronInstance): void {
 			type: 'simple',
 			name: `Output ${outLabel} Status (Simple Fallback)`,
 			style: {
-				text: `OUT ${outLabel}\n\nIN $(dm:RouteOut${outSlot}Video)`,
+				text: `$(( $(dm:RouteOut${outSlot}Video) == $(dm:RouteOut${outSlot}Audio) ? 'OUT ${outLabel}\\n\\nAV: IN ' + $(dm:RouteOut${outSlot}Video) : 'OUT ${outLabel}\\nV: IN ' + $(dm:RouteOut${outSlot}Video) + '\\nA: IN ' + $(dm:RouteOut${outSlot}Audio) ))`,
+				textExpression: true,
 				size: '14',
 				color: combineRgb(255, 255, 255),
 				bgcolor: combineRgb(0, 0, 50),

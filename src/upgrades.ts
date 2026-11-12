@@ -1,8 +1,4 @@
-import type {
-	CompanionStaticUpgradeScript,
-	CompanionStaticUpgradeResult,
-	JsonObject,
-} from '@companion-module/base'
+import type { CompanionStaticUpgradeScript, CompanionStaticUpgradeResult, JsonObject } from '@companion-module/base'
 
 export const upgradeScripts: CompanionStaticUpgradeScript<JsonObject, JsonObject>[] = [
 	function v2_0_0(_context, props): CompanionStaticUpgradeResult<JsonObject, JsonObject> {
