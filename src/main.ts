@@ -65,14 +65,10 @@ export default class CrestronInstance extends InstanceBase {
 		return getConfigFields()
 	}
 
-	public getPassword(): string {
-		return (this.secrets?.password as string) || (this.config?.password as string) || ''
-	}
-
 	public sendToCrestron(msg: string): void {
 		const sendBuf = Buffer.from(msg + '\r\n', 'latin1')
 
-		const password = this.getPassword()
+		const password = (this.secrets.password as string) || ''
 		const isPassword = Boolean(password && msg === password)
 		const logMsg = isPassword ? '********' : msg
 
@@ -161,7 +157,7 @@ export default class CrestronInstance extends InstanceBase {
 		}
 
 		if (this.socketBuffer.includes('Password:')) {
-			const password = this.getPassword()
+			const password = (this.secrets.password as string) || ''
 			if (!this.config.authentication || !password) {
 				this.log('error', 'Crestron DM requires authentication password, but none configured')
 				this.updateStatus(InstanceStatus.BadConfig, 'Password required')
@@ -189,8 +185,8 @@ export default class CrestronInstance extends InstanceBase {
 			this.onConnected(this.model)
 		}
 
-		// 4. Complete Console Response marker (e.g. DM-MD16x16> or prompt)
-		const endMarkerRegex = /DM-MD\d+x\d+>|Control Console>|Prompt>/
+		// 4. Complete Console Response marker (e.g. DM-MD16x16>)
+		const endMarkerRegex = /DM-MD\d+x\d+>/
 		if (endMarkerRegex.test(this.socketBuffer)) {
 			if (this.config.debugLogging) {
 				this.log('debug', `Complete response received: ${this.socketBuffer.trim()}`)
