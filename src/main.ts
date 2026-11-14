@@ -109,7 +109,7 @@ export default class CrestronInstance extends InstanceBase {
 		this.cleanupSocket()
 
 		if (!this.config.host) {
-			this.updateStatus(InstanceStatus.BadConfig, 'Target IP is missing')
+			this.updateStatus(InstanceStatus.BadConfig, 'Target IP or Hostname is missing')
 			return
 		}
 

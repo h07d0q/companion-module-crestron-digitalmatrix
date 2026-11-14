@@ -1,4 +1,4 @@
-import { Regex, type JsonValue, type SomeCompanionConfigField } from '@companion-module/base'
+import type { JsonValue, SomeCompanionConfigField } from '@companion-module/base'
 
 export interface ModuleConfig {
 	[key: string]: JsonValue | undefined
@@ -21,17 +21,17 @@ export function getConfigFields(): SomeCompanionConfigField[] {
 		{
 			type: 'textinput',
 			id: 'host',
-			label: 'Target IP',
+			label: 'Target IP or Hostname',
 			width: 6,
-			regex: Regex.IP,
 		},
 		{
-			type: 'textinput',
+			type: 'number',
 			id: 'port',
 			label: 'Target Port',
 			width: 3,
-			default: '23',
-			regex: Regex.PORT,
+			min: 1,
+			max: 65535,
+			default: 23,
 		},
 		{
 			type: 'checkbox',
